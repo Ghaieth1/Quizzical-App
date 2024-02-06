@@ -137,6 +137,9 @@ const Questions = () => {
           <button
             className="px-4 py-2 mt-4 text-white bg-blue-500 hover:bg-violet-800 rounded-2xl"
             onClick={answersChecked ? resetQuiz : verifyAnswers}
+            style={{
+              boxShadow: "10px 10px 5px -5px black, 5px 10px 10px -5px black",
+            }}
           >
             {answersChecked ? "Try again" : "Check answers"}
           </button>
