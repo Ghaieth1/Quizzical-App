@@ -4,6 +4,7 @@ const Questions = () => {
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState(Array(10).fill(null));
   const [score, setScore] = useState(null);
+  const [answersChecked, setAnswersChecked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,25 +43,39 @@ const Questions = () => {
   };
 
   const getAnswerClass = (index, answer) => {
-    return selectedAnswers[index] === answer ? "bg-violet-500" : "";
+    if (!answersChecked) {
+      const isSelected = selectedAnswers[index] === answer;
+      return isSelected ? "bg-violet-500" : "";
+    }
+
+    const isCorrect = answer === questions[index].correct_answer;
+    const isIncorrect = selectedAnswers[index] !== null && !isCorrect;
+
+    if (isIncorrect) {
+      return "bg-red-500";
+    } else if (isCorrect) {
+      return "bg-green-500";
+    } else {
+      return selectedAnswers[index] ? "bg-violet-500" : "";
+    }
   };
 
   const verifyAnswers = () => {
+    setAnswersChecked(true);
+
     const correctAnswers = questions.map((question) => question.correct_answer);
     const userAnswers = selectedAnswers.filter((answer) => answer !== null);
     let newScore = 0;
     userAnswers.forEach((answer, index) => {
       if (answer === correctAnswers[index]) {
         newScore++;
-        return selectedAnswers[index] === answer ? "bg-green-500" : "";
       }
     });
     setScore(newScore);
   };
 
-  // Fonction pour mélanger un tableau
   const shuffleArray = (array) => {
-    const shuffledArray = array.slice(); // Pour éviter de modifier l'array d'origine
+    const shuffledArray = array.slice();
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledArray[i], shuffledArray[j]] = [
@@ -92,7 +107,7 @@ const Questions = () => {
                   className="hidden"
                 />
                 <div
-                  className={`px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-violet-700 ${getAnswerClass(
+                  className={`px-4 py-2 font-bold rounded-full text-white bg-blue-500 hover:bg-violet-700 ${getAnswerClass(
                     index,
                     answer
                   )}`}

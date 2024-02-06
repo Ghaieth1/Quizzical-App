@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import Questions from "./components/Questions";
-// import Answers from "./components/Answers";
 
 const Home = () => {
   return (
@@ -22,7 +21,6 @@ const App = () => (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/questions" element={<Questions />} />
-      {/* <Route path="/answers" element={<Answers />} /> */}
     </Routes>
   </Router>
 );
