@@ -13,7 +13,7 @@ const Questions = () => {
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "https://opentdb.com/api.php?amount=5&category=21&difficulty=easy&type=multiple"
+        "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
       );
       const data = await response.json();
 
